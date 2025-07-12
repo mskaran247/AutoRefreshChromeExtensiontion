@@ -1,0 +1,32 @@
+// --- manifest.json ---
+// This file defines the core properties of your Chrome extension,
+// including its name, version, permissions, and what scripts it uses.
+{
+  "manifest_version": 3,
+  "name": "Simple Auto Refresher",
+  "version": "1.4",
+  "description": "Auto refresh active or all tabs with a specified time in seconds, showing countdown on icon.",
+  "permissions": [
+    "activeTab",       // Allows access to the currently active tab's URL and ID.
+    "alarms",          // Enables scheduling periodic events (for refreshing).
+    "storage",         // Allows the extension to save and retrieve user preferences.
+    "browsingData",    // Grants permission to clear browsing data, including cache.
+    "tabs"             // Required for managing (querying, creating, reloading) multiple tabs.
+  ],
+  "action": {
+    "default_popup": "popup.html", // Specifies the HTML file to display when the extension icon is clicked.
+    "default_icon": {              // Defines the icons for the extension.
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js" // Specifies the background script that runs in the background.
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

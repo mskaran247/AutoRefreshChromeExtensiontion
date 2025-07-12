@@ -1,0 +1,158 @@
+// --- popup.html ---
+// This is the user interface that appears when you click the extension icon in the browser toolbar.
+// It contains input fields for time, checkboxes for cache, and buttons to start/stop.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Refresher</title>
+    <style>
+        /* Basic styling for the popup to make it user-friendly and visually appealing */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font for a modern look */
+            width: 280px; /* Adjusted width for simplified layout */
+            padding: 15px;
+            background-color: #f7f7f7; /* Light background */
+            color: #333; /* Dark text for readability */
+            position: relative; /* For absolute positioning of status */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Spacing between elements */
+        }
+        h2 {
+            margin-top: 0;
+            color: #2c3e50; /* Darker title color */
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="number"] {
+            width: calc(100% - 16px); /* Full width minus padding */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px; /* Rounded corners for inputs */
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db; /* Highlight on focus */
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            background-color: white;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px; /* Rounded buttons */
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover effects */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            flex-grow: 1; /* Allow buttons to grow to fill space */
+        }
+        button:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .status-message {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            background-color: #ecf0f1; /* Light grey background for status */
+            color: #2c3e50;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        #currentTabUrlDisplay {
+            word-break: break-all; /* Ensures long URLs wrap */
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        /* Button specific colors */
+        .btn-start { background-color: #2ecc71; color: white; }
+        .btn-start:hover { background-color: #27ae60; }
+        .btn-stop { background-color: #e74c3c; color: white; }
+        .btn-stop:hover { background-color: #c0392b; }
+
+        /* ON/OFF Status indicator */
+        #statusIndicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+        #statusIndicator.on {
+            background-color: #2ecc71;
+            color: white;
+        }
+        #statusIndicator.off {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="statusIndicator" class="off">OFF</div>
+    <div class="container">
+        <h2>Auto Refresher</h2>
+
+        <label for="refreshScope">Refresh Scope:</label>
+        <select id="refreshScope">
+            <option value="activeTab">Active Tab</option>
+            <option value="allTabs">All Tabs</option>
+        </select>
+
+        <div id="currentTabUrlDisplay">Loading Current Tab URL...</div>
+
+        <label for="seconds">Refresh every (seconds):</label>
+        <input type="number" id="seconds" min="1" value="8" placeholder="8">
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="clearCache">
+            <label for="clearCache">Clear cache on refresh</label>
+        </div>
+
+        <div class="button-group">
+            <button id="startButton" class="btn-start">Start</button>
+            <button id="stopButton" class="btn-stop">Stop</button>
+        </div>
+
+        <div id="statusMessage" class="status-message">Ready</div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
