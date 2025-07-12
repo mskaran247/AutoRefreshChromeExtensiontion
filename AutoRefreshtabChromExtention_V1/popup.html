@@ -1,0 +1,138 @@
+// --- popup.html ---
+// This is the user interface that appears when you click the extension icon in the browser toolbar.
+// It contains input fields for time, a checkbox for cache, and buttons to start/stop.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Refresher</title>
+    <style>
+        /* Basic styling for the popup to make it user-friendly and visually appealing */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font for a modern look */
+            width: 300px; /* Fixed width for the popup */
+            padding: 15px;
+            background-color: #f7f7f7; /* Light background */
+            color: #333; /* Dark text for readability */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Spacing between elements */
+        }
+        h2 {
+            margin-top: 0;
+            color: #2c3e50; /* Darker title color */
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"] {
+            width: calc(50% - 5px); /* Half width for minutes/seconds inputs */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px; /* Rounded corners for inputs */
+            box-sizing: border-box;
+            margin-right: 5px;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db; /* Highlight on focus */
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        .time-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        .time-input-group {
+            flex: 1; /* Equal width for minute and second input groups */
+            display: flex;
+            flex-direction: column;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px; /* Rounded buttons */
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover effects */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        button:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        #startButton {
+            background-color: #2ecc71; /* Green for start */
+            color: white;
+        }
+        #startButton:hover {
+            background-color: #27ae60;
+        }
+        #stopButton {
+            background-color: #e74c3c; /* Red for stop */
+            color: white;
+        }
+        #stopButton:hover {
+            background-color: #c0392b;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        #status {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            background-color: #ecf0f1; /* Light grey background for status */
+            color: #2c3e50;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        #currentUrl {
+            word-break: break-all; /* Ensures long URLs wrap */
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Auto Refresher</h2>
+        <div id="currentUrl">Loading URL...</div>
+
+        <div class="time-inputs">
+            <div class="time-input-group">
+                <label for="minutes">Minutes:</label>
+                <input type="number" id="minutes" min="0" value="0" placeholder="0">
+            </div>
+            <div class="time-input-group">
+                <label for="seconds">Seconds:</label>
+                <input type="number" id="seconds" min="0" max="59" value="30" placeholder="30">
+            </div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="clearCache">
+            <label for="clearCache">Clear cache on refresh</label>
+        </div>
+
+        <div class="button-group">
+            <button id="startButton">Start Refresh</button>
+            <button id="stopButton">Stop Refresh</button>
+        </div>
+
+        <div id="status">Ready</div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
